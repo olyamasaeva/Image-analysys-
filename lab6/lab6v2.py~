@@ -1,0 +1,83 @@
+import cv2
+import numpy as np
+
+def getFlow(video_frame, frame_mask, t0):
+    # calculate optical flow
+    p1, st, err = cv2.calcOpticalFlowPyrLK(old_gray, frame_gray, t0, None, **lk_params)
+    # Select good points
+    good_new = p1[st == 1]
+    good_old = t0[st == 1]
+    # draw the tracks
+    for i, (new, old) in enumerate(zip(good_new, good_old)):
+        a, b = new.ravel()
+        c, d = old.ravel()
+        frame_mask = cv2.line(frame_mask, (a, b), (c, d), color[i].tolist(), 2)
+        video_frame = cv2.circle(video_frame, (a, b), 5, color[i].tolist(), -1)
+    img = cv2.add(video_frame, frame_mask)
+    return img, good_new
+
+static_back = None
+
+# Capturing video
+video = cv2.VideoCapture("video4.mp4")
+fourcc = cv2.VideoWriter_fourcc('M', 'J', 'P', 'G')
+size = (int(video.get(cv2.CAP_PROP_FRAME_WIDTH)),
+        int(video.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+out = cv2.VideoWriter('result.avi', fourcc, 25.0, size, isColor=True)
+
+# params for Shi Tomasi corner detection
+feature_params= dict(maxCorners=100, qualityLevel=0.02, minDistance=10, blockSize=3)
+# Parameters for lucas kanade optical flow
+lk_params= dict(winSize=(15, 15), maxLevel=2, criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03))
+color = np.random.randint(0, 255, (100, 3))
+ret, old_frame = video.read()
+old_gray = cv2.cvtColor(old_frame, cv2.COLOR_BGR2GRAY)
+p0 = cv2.goodFeaturesToTrack(old_gray, mask=None, **feature_params)
+# Create a mask image for drawing purposes
+mask = np.zeros_like(old_frame)
+good_new = 0
+good_old = 0
+
+while True:
+    check, frame = video.read()
+    frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+    motion = 0
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    gray = cv2.GaussianBlur(gray, (15, 15), 0)
+
+    if static_back is None:
+        static_back = gray
+
+    diff_frame = cv2.absdiff(static_back, gray)
+    thresh_frame = cv2.threshold(diff_frame, 25, 255, cv2.THRESH_BINARY)[1]
+
+    _, cnts, _ = cv2.findContours(thresh_frame.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+    frame, good_new = getFlow(frame, mask, p0)
+
+    for contour in cnts:
+        if cv2.contourArea(contour) < 800:
+            continue
+        motion = 1
+
+        (x, y, w, h) = cv2.boundingRect(contour)
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 3)
+
+    cv2.imshow("Threshold Frame", thresh_frame)
+    cv2.imshow("Color Frame", frame)
+
+    k = cv2.waitKey(30) & 0xff
+    if k == 27:
+        break
+
+    old_gray = frame_gray.copy()
+    p0 = good_new.reshape(-1, 1, 2)
+
+    out.write(frame)
+
+video.release()
+out.release()
+cv2.destroyAllWindows()
+
+
