@@ -1,10 +1,10 @@
 # Image-analysys-
 Image Analysis Course Labs at the Petrozavodsk State University
- <img align="left" width="200" height="200" src="https://github.com/olyamasaeva/Image-analysys-/raw/main/img/opencv.png">
+ <img align="left" width="100" height="100" src="https://github.com/olyamasaeva/Image-analysys-/raw/main/img/opencv.png">
 <p align="center">
-<img align="left" width="350" height="200" src="https://github.com/olyamasaeva/Image-analysys-/raw/main/img/example.jpg">
+<img align="left" width="150" height="100" src="https://github.com/olyamasaeva/Image-analysys-/raw/main/img/example.jpg">
 <p align="center">
-<img align="left" width="400" height="200" src="https://github.com/olyamasaeva/Image-analysys-/raw/main/img/tensorflow.png">
+<img align="left" width="200" height="100" src="https://github.com/olyamasaeva/Image-analysys-/raw/main/img/tensorflow.png">
 <p align="center">
 
 
