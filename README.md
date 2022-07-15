@@ -2,7 +2,7 @@
 Image Analysis Course Labs at the Petrozavodsk State University
  <img align="left" width="100" height="100" src="https://github.com/olyamasaeva/Image-analysys-/raw/main/img/opencv.png">
 <p align="center">
-<img align="left" width="200" height="100" src="https://github.com/olyamasaeva/Image-analysys-/raw/main/img/tensorflow.png">
+<img align="right" width="200" height="100" src="https://github.com/olyamasaeva/Image-analysys-/raw/main/img/tensorflow.png">
 <p align="center">
 
 
