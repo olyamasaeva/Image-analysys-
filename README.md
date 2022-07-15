@@ -1,5 +1,12 @@
 # Image-analysys-
 Image Analysis Course Labs at the Petrozavodsk State University
+ <img align="left" width="200" height="200" src="https://github.com/olyamasaeva/Image-analysys-/raw/main/img/opencv.png">
+<p align="center">
+<img align="left" width="350" height="200" src="https://github.com/olyamasaeva/Image-analysys-/raw/main/img/example.jpg">
+<p align="center">
+<img align="left" width="400" height="200" src="https://github.com/olyamasaeva/Image-analysys-/raw/main/img/tensorflow.png">
+<p align="center">
+
 
 Курс состоял из 180 Академических часов и охватывал прикладные задачи обработки и анализа изображений. Лабораторные работы велись на языке программирования Python, активно применялись библиотеки OpenCV,keras, tensorflow, torch. sklearn. В рамках курса изучались и использовались алгоритмы фильтрации, Морфологические преобразования, работа с контурами изображения, поиск объекта на изображении,машинное обучение в задачах классификации и кластеризации изображений.
 
